@@ -1,5 +1,6 @@
 #pragma once
-
+#ifndef _STUDENT_H_
+#define _STUDENT_H_
 
 #include <iostream>
 #include <string>
@@ -8,10 +9,7 @@
 
 
 #include "Group.h"
-
-
-
-
+class Group;
 
 class Student {
  private:
@@ -37,4 +35,4 @@ class Student {
 };
 
 
-
+#endif 

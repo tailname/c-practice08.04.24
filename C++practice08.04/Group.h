@@ -1,6 +1,7 @@
 #pragma once
 
-
+#ifndef _GROUP_H_
+#define _GROUP_H_
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,7 +9,7 @@
 
 
 #include "Student.h"
-
+class Student;
 
 class Group {
  private:
@@ -34,5 +35,5 @@ class Group {
     int32_t GetheadID() const;
     std::vector<Student*> getStudents() const;
 };
-
+#endif // !_GROUP_H_
 

@@ -44,8 +44,8 @@ void Group::removeStudent(const uint32_t id) {
 	}
 }
 bool Group::isEmpty() const {
-	if (students.empty() == false)return true;
-	return false;
+	if (students.empty() == false)return false;
+	return true;
 }
 
 std::string Group::GetGroupTitle() const {

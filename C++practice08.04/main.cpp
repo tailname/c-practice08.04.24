@@ -9,6 +9,8 @@ int main() {
 	deanary.createGroups("groups.txt");
 	deanary.hireStudents("students.txt");
 	deanary.getStatistics();
+	deanary.addMarksToAll();
+	deanary.saveStaff();
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"

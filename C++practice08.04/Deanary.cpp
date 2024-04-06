@@ -40,8 +40,8 @@ void Deanary::hireStudents(const std::string& st_file) {
 		ss >> id >> first_name >> second_name >> third_name >> name_group;
 		std::string fio = first_name + " " + second_name[0] + " " + third_name[0];
 		Student* student = new Student(id, fio);
-		int8_t mark;
-		while (ss >> mark) { student->addmark(mark); };
+		std::string mark;
+		while (ss>>mark) { student->addmark(stoi(mark)); };
 		for (Group* group : groups) {
 			if (group->GetGroupTitle() != name_group) continue;
 			student->addToGroup(*group);
@@ -57,17 +57,22 @@ void Deanary::addMarksToAll(const Group& group) {
 		group.getStudents()[i]->addmark(rand() % 10);
 	}
 }
+void Deanary::addMarksToAll() {
+	for (Group* group : groups) { addMarksToAll(*group); };
+}
 void Deanary::getStatistics() {
+	setlocale(LC_ALL, "Rus");
 	for (Group* group : groups) {
 		std::cout << "Group name: " << group->GetGroupTitle() << std::endl;
 		std::cout << "Number of students: " << group->getStudents().size() << std::endl;
 		if (group->isEmpty()) return;
 		if(group->GetheadID() !=-1) std::cout << "The head of group: " << group->GetheadID() << std::endl;
 		std::cout << "The average mark in the group is: " << group->getAveragemark() << std::endl;
-		std::cout << "Students of group \" " << group->GetGroupTitle() << "\": " << std::endl;
+		std::cout << "Students of group \" " << group->GetGroupTitle() << " \": " << std::endl;
 		for (Student* st : group->getStudents()) {
 			std::cout << "ID: " << st->GetID() << " Name: " << st->GetFIO() << " Marks: ";
-			for (int8_t mark : st->GetMarks()) { std::cout << mark << " "; };
+			for (int mark : st->GetMarks()) 
+			{ std::cout << mark << " "; };
 			std::cout << " Average mark of student: " << st->getAveragemark() << std::endl;
 		}
 	}
@@ -78,7 +83,7 @@ void Deanary::moveStudents(const std::vector<Student*> students, Group& group) {
 		student->addToGroup(group);
 	}
 }
-void Deanary::saveStaff(const std::string& up_file) {
+void Deanary::saveStaff() {
 	std::ofstream out;
 	out.open("students.txt");
 	if (out.is_open() == false) {
