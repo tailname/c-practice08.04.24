@@ -6,8 +6,8 @@
 
 int main() {
 	Deanary deanary;
-	deanary.createGroups("groups.txt");
-	deanary.hireStudents("students.txt");
+	deanary.createGroups();
+	deanary.hireStudents();
 	deanary.getStatistics();
 	deanary.addMarksToAll();
 	deanary.saveStaff();

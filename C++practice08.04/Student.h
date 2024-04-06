@@ -14,13 +14,13 @@ class Group;
 class Student {
  private:
     uint32_t id;
-    std::string fio;
+    std::wstring fio;
     std::vector<int8_t> marks;
     Group* group;
 
  public:
     Student();
-    Student(const uint32_t& id, const std::string& fio, Group* group = nullptr);
+    Student(const uint32_t& id, const std::wstring& fio, Group* group = nullptr);
 
     void addToGroup(Group& group);
     void addmark(const int8_t& mark);
@@ -28,7 +28,7 @@ class Student {
     bool isHeadOfGroup() const;
 
     uint32_t GetID() const;
-    std::string GetFIO() const;
+    std::wstring GetFIO() const;
     std::vector<int8_t> GetMarks() const;
     Group* GetGroup() const;
 

@@ -13,25 +13,25 @@ class Student;
 
 class Group {
  private:
-    std::string title;
-    std::string spec;
+    std::wstring title;
+    std::wstring spec;
     std::vector<Student*> students;
     Student* head;
 
  public:
-    Group(const std::string& group_title = "", const std::string& specialization = "", Student* head = nullptr);
+    Group(const std::wstring& group_title = L"", const std::wstring& specialization = L"", Student* head = nullptr);
     void addStudent( Student& student);
     void chooseHead(Student& student);
     void chooseHead();
     float getAveragemark() const;
     Student* getStudent(const uint32_t id) const;
-    Student* getStudent(const std::string& full_title) const;
+    Student* getStudent(const std::wstring& full_title) const;
     bool containsStudent(const Student& student) const;
     void removeStudent(const uint32_t id);
     bool isEmpty() const;
 
-    std::string GetGroupTitle() const;
-    std::string GetSpecialization() const;
+    std::wstring GetGroupTitle() const;
+    std::wstring GetSpecialization() const;
     int32_t GetheadID() const;
     std::vector<Student*> getStudents() const;
 };

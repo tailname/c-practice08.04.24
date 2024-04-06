@@ -1,7 +1,7 @@
 #include"Student.h"
 
 
-Student::Student(const uint32_t& id, const std::string& fio, Group* group) {
+Student::Student(const uint32_t& id, const std::wstring& fio, Group* group) {
 	this->id = id;
 	this->fio = fio;
 	this->group = group;
@@ -30,7 +30,7 @@ bool Student::isHeadOfGroup() const {
 uint32_t Student::GetID() const {
 	return id;
 }
-std::string Student::GetFIO() const {
+std::wstring Student::GetFIO() const {
 	return fio;
 }
 std::vector<int8_t> Student::GetMarks() const {

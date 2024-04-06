@@ -1,7 +1,7 @@
 #include"Group.h"
 
 
-Group::Group(const std::string& group_title, const std::string& specialization, Student* head) {
+Group::Group(const std::wstring& group_title, const std::wstring& specialization, Student* head) {
 	title = group_title;
 	this->spec = specialization;
 	this->head = head;
@@ -26,7 +26,7 @@ Student* Group::getStudent(const uint32_t id) const {
 	}
 	return nullptr;
 }
-Student* Group::getStudent(const std::string& full_title) const {
+Student* Group::getStudent(const std::wstring& full_title) const {
 	for (int i = 0; i < students.size(); ++i) {
 		if (students[i]->GetFIO() == full_title) return students[i];
 	}
@@ -48,10 +48,10 @@ bool Group::isEmpty() const {
 	return true;
 }
 
-std::string Group::GetGroupTitle() const {
+std::wstring Group::GetGroupTitle() const {
 	return title;
 }
-std::string Group::GetSpecialization() const {
+std::wstring Group::GetSpecialization() const {
 	return spec;
 }
 int32_t Group::GetheadID() const {

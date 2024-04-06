@@ -18,8 +18,8 @@ class Deanary {
     ~Deanary();
     Deanary() {};
     Deanary(const std::vector<Group*>& groups);
-    void createGroups(const std::string& gr_file);
-    void hireStudents(const std::string& st_file);
+    void createGroups();
+    void hireStudents();
     void addMarksToAll(const Group& group);
     void addMarksToAll();
     void getStatistics();
