@@ -13,10 +13,14 @@ void Group::chooseHead( Student& student) {
 	head = &student;
 }
 void Group::chooseHead() {
-	head = students[0];
+	if (students.size() > 1) {
+		head = students[1];
+	}
+	else head = nullptr;
 }
 float Group::getAveragemark() const {
 	float anser = 0;
+	if (students.size() == 0) return 0;
 	for (int i = 0; i < students.size(); ++i) anser += students[i]->getAveragemark();
 	return anser / students.size();
 }
@@ -39,8 +43,12 @@ bool Group::containsStudent(const Student& student) const {
 	return false;
 }
 void Group::removeStudent(const uint32_t id) {
-	for (int i = 0; i < students.size(); ++i) {
-		if (students[i]->GetID() == id) students.erase(students.begin() + i);
+ 	for (int i = 0; i < students.size(); ++i) {
+		if (students[i]->GetID() == id) {
+			Group* tem_gr= nullptr;
+			students[i]->addToGroup(*tem_gr);
+			students.erase(students.begin() + i);
+		}
 	}
 }
 bool Group::isEmpty() const {

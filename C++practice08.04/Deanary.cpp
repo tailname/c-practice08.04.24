@@ -13,7 +13,9 @@ Deanary::Deanary(const std::vector<Group*>& groups) {
 	this->groups = groups;
 }
 void Deanary::createGroups() {
+	const std::locale utf8_locale = std::locale(std::locale(), new std::codecvt_utf8<wchar_t>());
 	std::wifstream ifs("groups.txt");
+	ifs.imbue(utf8_locale);
 	if (ifs.is_open() == false) {
 		std::cout << "ERROR" << std::endl;
 		return;
@@ -27,7 +29,9 @@ void Deanary::createGroups() {
 	ifs.close();
 };
 void Deanary::hireStudents() {
+	const std::locale utf8_locale = std::locale(std::locale(), new std::codecvt_utf8<wchar_t>());
 	std::wifstream ifs("students.txt");
+	ifs.imbue(utf8_locale);
 	if (ifs.is_open() == false) {
 		std::cout << "ERROR" << std::endl;
 		return;
@@ -40,8 +44,8 @@ void Deanary::hireStudents() {
 		ss >> id >> first_name >> second_name >> third_name >> name_group;
 		std::wstring fio = first_name + L" " + second_name[0] + L" " + third_name[0];
 		Student* student = new Student(id, fio);
-		std::wstring mark;
-		while (ss>>mark) { student->addmark(stoi(mark)); };
+		int mark;
+		while (ss>>mark) { student->addmark(mark); };
 		for (Group* group : groups) {
 			if (group->GetGroupTitle() != name_group) continue;
 			student->addToGroup(*group);
@@ -77,31 +81,37 @@ void Deanary::getStatistics() {
 		}
 	}
 }
+
+Group* Deanary::GetGroup(const std::wstring& group) const {
+	for (int i = 0; i < groups.size(); ++i) {
+		if (groups[i]->GetGroupTitle() == group) return groups[i];
+	}
+	return nullptr;
+}
+
 void Deanary::moveStudents(const std::vector<Student*> students, Group& group) {
 	for (Student* student : students) {
 		if (student->isHeadOfGroup()) student->GetGroup()->chooseHead();
+		student->GetGroup()->removeStudent(student->GetID());
+		group.addStudent(*student);
 		student->addToGroup(group);
 	}
 }
 void Deanary::saveStaff() {
-	std::ofstream fs;
-	fs.open("students.txt", std::ios::ate |std::ios::out | std::ios::binary);
-
-	unsigned char smarker[2];
-	smarker[0] = 0x31;
-	smarker[1] = 0x20;
-
-	fs << smarker;
-	fs.close();
+	const std::locale utf8_locale= std::locale(std::locale(), new std::codecvt_utf8<wchar_t>());
+	
 	std::wofstream out;
-	out.open("students.txt",std::ios::app);
+	
+	out.open("students.txt");
+	out.imbue(utf8_locale);
 	if (out.is_open() == false) {
 		std::cout << "ERROR" << std::endl;
 		return;
 	}
+	
 	for (int i = 0; i < groups.size(); ++i) {
 		for (int j = 0; j < groups[i]->getStudents().size(); ++j) {
-			out << groups[i]->getStudents()[j]->GetFIO() << L" " << groups[i]->GetGroupTitle();
+			out << groups[i]->getStudents()[j]->GetID()<< L" " << groups[i]->getStudents()[j]->GetFIO() << L" " << groups[i]->GetGroupTitle();
 			for (int k = 0; k < groups[i]->getStudents()[j]->GetMarks().size(); ++k) {
 				out << L" " << groups[i]->getStudents()[j]->GetMarks()[k];
 			}
@@ -115,17 +125,31 @@ void Deanary::saveStaff() {
 		out << groups[i]->GetGroupTitle() << std::endl;
 	}
 }
-void Deanary::initHeads(Student& student) 
-{ student.GetGroup()->chooseHead(student); }
-void Deanary::fireStudents(const Student& student) {
-	if (student.isHeadOfGroup()) student.GetGroup()->chooseHead();
-	student.GetGroup()->removeStudent(student.GetID());
-	delete &student;
+void Deanary::initHeads() 
+{
+	for (int i = 0; i < groups.size(); ++i) {
+		groups[i]->chooseHead();
+	}
+}
+void Deanary::fireStudents(const std::vector<Student*>& students) {
+	for (Student* student : students) {
+		Group* gr = student->GetGroup();
+		student->GetGroup()->removeStudent(student->GetID());
+		if (gr != nullptr && student->GetID() == gr->GetheadID()) gr->chooseHead();
+	}
+	
+	
 };
 
 bool Deanary::ContainsGroup(const Group& group) const {
 	for (int i = 0; i < groups.size(); ++i) {
 		if (groups[i]->GetGroupTitle() == group.GetGroupTitle()) return true;
+	}
+	return false;
+}
+bool Deanary::ContainsGroup(const std::wstring& group) const {
+	for (int i = 0; i < groups.size(); ++i) {
+		if (groups[i]->GetGroupTitle() == group) return true;
 	}
 	return false;
 }

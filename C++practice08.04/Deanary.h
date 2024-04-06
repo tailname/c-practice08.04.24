@@ -3,7 +3,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include<locale>
+#include<codecvt>
 #include <sstream>
 #include <fstream>
 
@@ -23,11 +24,13 @@ class Deanary {
     void addMarksToAll(const Group& group);
     void addMarksToAll();
     void getStatistics();
+    Group* GetGroup(const std::wstring& group) const;
     void moveStudents(const std::vector<Student*> students, Group& group);
     void saveStaff();
-    void initHeads(Student& student);
-    void fireStudents(const Student& student);
+    void initHeads();
+    void fireStudents(const std::vector<Student*>& students);
 
     bool ContainsGroup(const Group& group) const;
+    bool ContainsGroup(const std::wstring& group) const;
 };
 
