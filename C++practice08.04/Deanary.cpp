@@ -25,7 +25,12 @@ void Deanary::createGroups() {
     }
     std::wstring line;
     while (std::getline(ifs, line)) {
-        Group* group = new Group(line);
+        std::wstringstream ss(line);
+        std::wstring title;
+        std::wstring specialization;
+        ss >> title;
+        ss >> specialization;
+        Group* group = new Group(title, specialization);
         groups.push_back(group);
     }
     ifs.close();
@@ -75,6 +80,8 @@ void Deanary::getStatistics() {
     setlocale(LC_ALL, "Rus");
     for (Group* group : groups) {
         std::wcout << L"Group name: " << group->GetGroupTitle() << std::endl;
+        std::wcout << L"Group specialization: " <<
+                      group->GetSpecialization() << std::endl;
         std::wcout << L"Number of students: " <<
             group->getStudents().size() <<
             std::endl;
@@ -149,7 +156,8 @@ void Deanary::saveStaff() {
     out.close();
     out.open("groups.txt");
     for (int i = 0; i < groups.size(); ++i) {
-        out << groups[i]->GetGroupTitle() << std::endl;
+        out << groups[i]->GetGroupTitle() << L" "<<
+               groups[i]->GetSpecialization() << std::endl;
     }
 }
 void Deanary::initHeads() {
