@@ -1,3 +1,4 @@
+// Copyright 2014 Google Inc. All Rights Reserved.
 #pragma once
 
 #ifndef _GROUP_H_
@@ -19,9 +20,11 @@ class Group {
     Student* head;
 
  public:
-    Group(const std::wstring& group_title = L"", const std::wstring& specialization = L"", Student* head = nullptr);
-    void addStudent( Student& student);
-    void chooseHead(Student& student);
+    Group(const std::wstring& group_title = L"",
+    const std::wstring& specialization = L"",
+    Student* head = nullptr);
+    void addStudent(Student* student);
+    void chooseHead(Student* student);
     void chooseHead();
     float getAveragemark() const;
     Student* getStudent(const uint32_t id) const;
@@ -35,5 +38,5 @@ class Group {
     int32_t GetheadID() const;
     std::vector<Student*> getStudents() const;
 };
-#endif // !_GROUP_H_
+#endif  // !_GROUP_H_
 

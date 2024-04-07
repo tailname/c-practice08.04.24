@@ -1,3 +1,5 @@
+// Copyright 2014 Google Inc. All Rights Reserved.
+
 #pragma once
 #ifndef _STUDENT_H_
 #define _STUDENT_H_
@@ -20,9 +22,11 @@ class Student {
 
  public:
     Student();
-    Student(const uint32_t& id, const std::wstring& fio, Group* group = nullptr);
+    Student(const uint32_t& id,
+            const std::wstring& fio,
+            Group* group = nullptr);
 
-    void addToGroup(Group& group);
+    void addToGroup(Group* group);
     void addmark(const int8_t& mark);
     float getAveragemark() const;
     bool isHeadOfGroup() const;
@@ -31,8 +35,7 @@ class Student {
     std::wstring GetFIO() const;
     std::vector<int8_t> GetMarks() const;
     Group* GetGroup() const;
-
 };
 
 
-#endif 
+#endif
